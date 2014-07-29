@@ -13,6 +13,18 @@ class Utils {
     return Utils::list2array($range);
   }
 
+  public static function hasMoreChapters($string) {
+    if(is_array($string)):
+    foreach($string as $s) {
+      if(strpos($s,'&') !== false) return true;
+    }
+    return false;
+    else:
+      if(strpos($string,'&') !== false) return true;
+      return false;
+    endif;
+  }
+
   public static function list2array ($list) {
     $array = explode(',', $list);
     $return = array();
