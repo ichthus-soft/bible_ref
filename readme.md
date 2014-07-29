@@ -21,6 +21,10 @@ And after that run ```composer install```.
 Or if you already have an ```composer.json``` file in your project, add the above code and run ```composer update```.
 
 After this, you can use the package like this: 
+```
+use BibleRef\Reference;
+$reference = new Reference('John 3:16');
+```
 ####Manual installation####
 Clone this repository and include `src/BibleRef/Utils.php` and `src/BibleRef/Reference.php` in your PHP file!
 
