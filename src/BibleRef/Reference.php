@@ -12,6 +12,6 @@ class Reference {
 
   public function getName() {
     return $this->reference;
-    #test
+    #test nu merge mah
   }
 }
