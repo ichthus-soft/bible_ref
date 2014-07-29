@@ -28,7 +28,7 @@ class Reference {
 
         $temp = $this->process($temp,$_b);
 
-        if(count($temp['verses']) == 0 AND !$this->emptyVersesIfMultiple) {
+        if($this->emptyVersesIfMultiple) {
            $temp['verses'] = $temp['chapter'];
         }
         array_push($book,$temp);
@@ -37,7 +37,12 @@ class Reference {
     } else {
       $book = ['name' => "", 'chapter' => "", 'verses' => []];
 
+
       $book = $this->process($book);
+
+      if(!$this->emptyVersesIfMultiple) {
+           $book['verses'] = $book['chapter'];
+        }
     }
 
     return $book;
@@ -144,6 +149,7 @@ class Reference {
         unset($book['verses'][$key]);
       } else {
         $book['chapter'][$chapter][] = (int)$verse;
+        unset($book['verses'][$key]);
       }
       return $book;
   }
