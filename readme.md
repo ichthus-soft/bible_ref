@@ -9,7 +9,7 @@ Installation
 ----------
 It is recommended that you install this package through Composer.
 Create a file name ```composer.json``` in your working directory and paste the following in it:
-```
+```json
 {
     "require": {
         "ichthus-soft/bible_ref": "dev-master"
@@ -21,7 +21,7 @@ And after that run ```composer install```.
 Or if you already have an ```composer.json``` file in your project, add the above code and run ```composer update```.
 
 After this, you can use the package like this: 
-```
+```php
 use BibleRef\Reference;
 $reference = new Reference('John 3:16');
 ```
@@ -29,7 +29,7 @@ $reference = new Reference('John 3:16');
 Clone this repository and include `src/BibleRef/Utils.php` and `src/BibleRef/Reference.php` in your PHP file!
 
 ### Query syntax ###
-```
+```php
 # You can add a single verse
 $single = new Reference('John 3:16');
 # You can add a range of verses
@@ -50,7 +50,7 @@ So, to summarize:
 
 If you add multiple chapters, the ```verses``` return value will be default empty and the ```chapters``` return value will be an array of chapters with the verses associated.
 
-```
+```php
 array (size=3)
   'name' => string 'John' (length=4)
   'chapter' => 
@@ -72,7 +72,7 @@ And basically the ```verses``` key of the returned array will be a clone of the 
 
 Examples
 -------------------
-```
+```php
 require_once __DIR__ . '/vendor/autoload.php';
 use BibleRef\Reference;
 $test = new Reference('John 3:16');
@@ -90,7 +90,7 @@ array (size=3)
 ```
 
 #### More advanced example ####
-```
+```php
 require_once __DIR__ . '/vendor/autoload.php';
 
 use BibleRef\Reference;
@@ -100,7 +100,7 @@ echo '<pre>';
 print_r($array);
 ```
 returns this
-```
+```php
 Array
 (
     [0] => Array
