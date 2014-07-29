@@ -5,6 +5,25 @@ About the project
 
 **Bible_ref** is a composer package that transforms real text references into PHP an PHP array for better handling in MySQL queries or stuff like that. 
 
+Installation
+----------
+It is recommended that you install this package through Composer.
+Create a file name ```composer.json``` in your working directory and paste the following in it:
+```
+{
+    "require": {
+        "ichthus-soft/bible_ref": "dev-master"
+    }
+}
+```
+And after that run ```composer install```.
+
+Or if you already have an ```composer.json``` file in your project, add the above code and run ```composer update```.
+
+After this, you can use the package like this: 
+####Manual installation####
+Clone this repository and include `src/BibleRef/Utils.php` and `src/BibleRef/Reference.php` in your PHP file!
+
 ### Query syntax ###
 ```
 # You can add a single verse
