@@ -123,7 +123,7 @@ Array
 ####Real life usage:####
 This package was made for the **ichthus-soft/bible-api** package, so let me give you an example of how we use this package there (**contains parts in Romanian**). You can also see this code directly on the GitHub repository by clicking **[here](https://github.com/ichthus-soft/bible-api/blob/2cf8cf13a56a1610dddcacd2638e8c912052bde5/index.php#L172)**!
 
-```
+```php
 function v2_query($query, &$app) {
   $test = new Reference($query);
   $test = $test->v2();
