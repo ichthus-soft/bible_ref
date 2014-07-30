@@ -29,27 +29,30 @@ class Reference {
     $query = str_replace('+',' ',$query);
     $qpentrupasaj = str_replace('&',',',$query);
     $qpentrupasaj = str_replace(';',' ',$qpentrupasaj);
-    $return['pasaj'] = $qpentrupasaj;
+    $return['passage'] = $qpentrupasaj;
+    $return['books'] = [];
     $arr = explode(';',$query);
     foreach($arr as $a) {
       $parts = preg_split('/[^a-z]/i', $a,2);
       $nume = $parts[0];
-      $return[$nume] = [];
-      $return[$nume]['versete'] = [];
+      $return['books'][$nume] = [];
+      $return['books'][$nume]['verses'] = [];
       $p = explode('&',$parts[1]);
       foreach($p as $parte) {
         $pp = explode(':',$parte);
         $capitol = $pp[0];
-        $return[$nume]['versete'][$capitol] = [];
+        $return['books'][$nume]['verses'][$capitol] = [];
         $versete = explode(',',$pp[1]);
         foreach($versete as $verset) {
           if(Utils::isARange($verset)) {
             $allr = Utils::getVersesArray($verset);
             foreach($allr as $v) {
-                array_push($return[$nume]['versete'][$capitol], $v);
+                $v = (int)$v;
+                array_push($return['books'][$nume]['verses'][$capitol], $v);
             }
           } else {
-                array_push($return[$nume]['versete'][$capitol], $verset);
+                $verset = (int)$verset;
+                array_push($return['books'][$nume]['verses'][$capitol], $verset);
           }
         }
       }
