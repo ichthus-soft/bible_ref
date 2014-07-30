@@ -19,6 +19,44 @@ class Reference {
     $this->sort = (bool)$val;
   }
 
+  public function v2() {
+    $return = $this->v2_query($this->reference);
+    return $return;
+  }
+
+  private function v2_query($query) {
+    $return = [];
+    $query = str_replace('+',' ',$query);
+    $qpentrupasaj = str_replace('&',',',$query);
+    $qpentrupasaj = str_replace(';',' ',$qpentrupasaj);
+    $return['pasaj'] = $qpentrupasaj;
+    $arr = explode(';',$query);
+    foreach($arr as $a) {
+      $parts = preg_split('/[^a-z]/i', $a,2);
+      $nume = $parts[0];
+      $return[$nume] = [];
+      $return[$nume]['versete'] = [];
+      $p = explode('&',$parts[1]);
+      foreach($p as $parte) {
+        $pp = explode(':',$parte);
+        $capitol = $pp[0];
+        $return[$nume]['versete'][$capitol] = [];
+        $versete = explode(',',$pp[1]);
+        foreach($versete as $verset) {
+          if(Utils::isARange($verset)) {
+            $allr = Utils::getVersesArray($verset);
+            foreach($allr as $v) {
+                array_push($return[$nume]['versete'][$capitol], $v);
+            }
+          } else {
+                array_push($return[$nume]['versete'][$capitol], $verset);
+          }
+        }
+      }
+    }
+    return $return;
+  }
+
   function getArray() {
     if(Utils::multiple($this->reference)) {
       $book = [];
