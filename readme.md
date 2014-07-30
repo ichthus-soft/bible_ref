@@ -46,6 +46,116 @@ So, to summarize:
 * To add another chapter, concatenate with **&** (Genesis 1:1&2:1)
 * To add another book, concatenate with **;** (that's a semi-colon) (Genesis 1:1;Acts 1:1)
 
+###Version 2 (current)###
+Version 2 is the new recommended version to be used. The returned output is sligtly different than the old version. 
+
+**Warning:** this version gives the output in the order you request it (the old version gave you the verses in ascending order. If you request first the chapter 2 verse 4 and after verse 2, the first element in the array will be verse 4 because it was first requested!
+
+**Example of the output structure:**
+```php
+/**
+Array
+(
+    [passage] => (string)
+    [books] => Array( <- array of books
+    (
+        [BookName1] => Array(
+                    [verses] => Array(
+                        [chapter] => Array([verses])
+                        )
+                    )
+    )
+**/
+```
+Example:
+```php
+$test = new Reference('Genesis 2:9&1:10-12,9;John 1:4-5');
+$array = $test->v2();
+print_r($array);
+/**
+returns:
+Array
+(
+    [passage] => Genesis 2:9,1:10-12,9 John 1:4-5
+    [books] => Array
+        (
+            [Genesis] => Array
+                (
+                    [verses] => Array
+                        (
+                            [2] => Array
+                                (
+                                    [0] => 9
+                                )
+
+                            [1] => Array
+                                (
+                                    [0] => 10
+                                    [1] => 11
+                                    [2] => 12
+                                    [3] => 9
+                                )
+
+                        )
+
+                )
+
+            [John] => Array
+                (
+                    [verses] => Array
+                        (
+                            [1] => Array
+                                (
+                                    [0] => 4
+                                    [1] => 5
+                                )
+
+                        )
+
+                )
+
+        )
+
+)
+**/
+```
+
+####Real life usage:####
+This package was made for the **ichthus-soft/bible-api** package, so let me give you an example of how we use this package there (**contains parts in Romanian**). You can also see this code directly on the GitHub repository by clicking **[here](https://github.com/ichthus-soft/bible-api/blob/2cf8cf13a56a1610dddcacd2638e8c912052bde5/index.php#L172)**!
+
+```
+function v2_query($query, &$app) {
+  $test = new Reference($query);
+  $test = $test->v2();
+  $return['pasaj'] = $test['passage'];
+  $return['versete'] = [];
+  $return['text'] = '';
+  foreach($test['books'] as $nume => $versete) {
+    foreach($versete['verses'] as $capitol => $verset) {
+      foreach($verset as $v) {
+          $_verset = $app['db']->fetchAssoc("SELECT * FROM biblia WHERE carte = ? AND capitol = ? AND verset = ?",
+    [$nume, $capitol, $v]);
+        if($_verset)
+        {
+          $a['testament'] = $_verset['testament'];
+          $a['carte'] = $_verset['carte'];
+          $a['capitol'] = $_verset['capitol'];
+          $a['verset'] = $_verset['verset'];
+          $a['text'] = $_verset['text'];
+          array_push($return['versete'], $a);
+          $return['text'] .= $_verset['text'].' ';
+        }
+      }
+    }
+  }
+  return $return;
+}
+```
+
+###Version 1 (old)###
+
+This version should not be used.
+
 #### Be careful! ####
 
 If you add multiple chapters, the ```verses``` return value will be default empty and the ```chapters``` return value will be an array of chapters with the verses associated.
