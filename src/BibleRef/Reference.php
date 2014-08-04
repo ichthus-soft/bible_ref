@@ -29,15 +29,16 @@ class Reference {
     $query = str_replace('+',' ',$query);
     $qpentrupasaj = str_replace('&',',',$query);
     $qpentrupasaj = str_replace(';',' ',$qpentrupasaj);
+    $query = str_replace('; ',';',$query);
     $return['passage'] = $qpentrupasaj;
     $return['books'] = [];
     $arr = explode(';',$query);
     foreach($arr as $a) {
-      $parts = preg_split('/[^a-z]/i', $a,2);
-      $nume = $parts[0];
+      $p = preg_match('/^((?:[1-4] )?[a-z]+) ([\d:]*)$/i', $a ,$parts);
+      $nume = $parts[1];
       $return['books'][$nume] = [];
       $return['books'][$nume]['verses'] = [];
-      $p = explode('&',$parts[1]);
+      $p = explode('&',$parts[2]);
       foreach($p as $parte) {
         $pp = explode(':',$parte);
         $capitol = $pp[0];
