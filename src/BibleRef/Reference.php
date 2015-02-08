@@ -34,7 +34,7 @@ class Reference {
     $return['books'] = [];
     $arr = explode(';',$query);
     foreach($arr as $a) {
-      $p = preg_match('/^((?:[1-4] )?[a-zA-Z-]+) ([\d-:,&]*)$/i', $a ,$parts);
+      $p = preg_match('/^((?:[1-4] )?[a-zA-Z-\s]+) ([\d-:,&]*)$/i', $a ,$parts);
       $nume = $parts[1];
       $return['books'][$nume] = [];
       $return['books'][$nume]['verses'] = [];
